@@ -1,34 +1,6 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Scanner;
 
 public class PalindromeCheckerApp {
-
-
-    public static boolean isPalindrome(String input) {
-
-
-        String cleaned = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-
-        Deque<Character> deque = new ArrayDeque<>();
-
-
-        for (char ch : cleaned.toCharArray()) {
-            deque.addLast(ch);
-        }
-
-
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     public static void main(String[] args) {
 
@@ -37,7 +9,14 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        if (isPalindrome(input)) {
+
+//        String cleaned = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+
+        String reversed = new StringBuilder(input).reverse().toString();
+
+
+        if (input.equals(reversed)) {
             System.out.println("It is a Palindrome.");
         } else {
             System.out.println("It is NOT a Palindrome.");
