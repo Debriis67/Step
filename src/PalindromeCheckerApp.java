@@ -1,43 +1,47 @@
 import java.util.Scanner;
+import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("--- Palindrome Checker (UC4: Char Array) ---");
-        System.out.print("Enter a string to check: ");
-        String input = scanner.nextLine();
+        Scanner sc = new Scanner(System.in);
 
-        String sanitized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        System.out.println("Enter a word:");
+        String text = sc.nextLine();
 
-        if (isPalindrome(sanitized)) {
-            System.out.println("Result: \"" + input + "\" is a palindrome.");
-        } else {
-            System.out.println("Result: \"" + input + "\" is NOT a palindrome.");
+        Stack<Character> stack = new Stack<>();
+        Queue<Character> queue = new LinkedList<>();
+
+        // Insert characters into both structures
+        for (int i = 0; i < text.length(); i++) {
+            char ch = text.charAt(i);
+            stack.push(ch);      // LIFO
+            queue.add(ch);       // FIFO
         }
 
-        scanner.close();
-    }
+        boolean isPalindrome = true;
 
-    public static boolean isPalindrome(String str) {
-        if (str == null || str.isEmpty()) {
-            return true;
-        }
+        // Compare dequeue (queue) vs pop (stack)
+        while (!stack.isEmpty()) {
 
-        char[] charArray = str.toCharArray();
+            char fromStack = stack.pop();
+            char fromQueue = queue.remove();
 
-        int left = 0;
-        int right = charArray.length - 1;
-
-        while (left < right) {
-            if (charArray[left] != charArray[right]) {
-                return false;
+            if (fromStack != fromQueue) {
+                isPalindrome = false;
+                break;
             }
-            left++;
-            right--;
         }
 
-        return true;
+        if (isPalindrome) {
+            System.out.println("It is a Palindrome");
+        } else {
+            System.out.println("It is NOT a Palindrome");
+        }
+
+        sc.close();
     }
 }
